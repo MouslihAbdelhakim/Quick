@@ -5,8 +5,8 @@ trait UnrecoverableError {
 }
 
 object UnrecoverableError {
-  def collectAllErrors[InType, OutType](
-      probableErrors: Either[UnrecoverableError, InType]*
+  def collectAllErrors[OutType](
+      probableErrors: Either[UnrecoverableError, Any]*
   ): Either[List[UnrecoverableError], OutType] = {
     val errorsList = probableErrors.collect {
       case Left(error) => error

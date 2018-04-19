@@ -22,11 +22,11 @@ object Quick extends App {
 
       val (leftFileLabel, rightFileLabel) = FileLabelsFromPaths(quickState)
 
-      val leftFilePathEither = ReadRowsFromFile(leftFilePath)
-      val rightFilePathEither = ReadRowsFromFile(rightFilePath)
-      val fileDescriptionPathEither = ReadXmlFile(quickState)
+      val leftFileEither = ReadRowsFromFile(leftFilePath)
+      val rightFileEither = ReadRowsFromFile(rightFilePath)
+      val fileDescriptionEither = ReadXmlFile(quickState)
 
-      (leftFilePathEither, rightFilePathEither, fileDescriptionPathEither) match {
+      (leftFileEither, rightFileEither, fileDescriptionEither) match {
         case (Right(leftFileRows),
               Right(rightFileRows),
               Right(fileDescriptionElem)) =>
@@ -40,8 +40,8 @@ object Quick extends App {
             case Right(rowDescriptionMatcher) =>
               val validationAndMatchingProcessesEither =
                 rowDescriptionMatcher.validateAndMatchTheseTwoFiles(
-                  leftFileRows(),
-                  rightFileRows())
+                  leftFileRows,
+                  rightFileRows)
               validationAndMatchingProcessesEither match {
                 case Right(validationAndMatchingProcesses) =>
                   val validationAndMatchingReports =
@@ -65,9 +65,9 @@ object Quick extends App {
 
         case _ =>
           val errorMessages = UnrecoverableError.collectAllErrorsToList(
-            leftFilePathEither,
-            rightFilePathEither,
-            fileDescriptionPathEither)
+            leftFileEither,
+            rightFileEither,
+            fileDescriptionEither)
           errorMessages.foreach(WriteToStderr(_))
           ExitWithStatus.interruptedByAnError
       }

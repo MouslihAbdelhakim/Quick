@@ -48,6 +48,7 @@ class OrderedRowDescription(
   }
 
   def isMatchable: Boolean = rowDivider.isMatchable
+  def isValidatable: Boolean = rowDivider.usableDuringValidation
 
   private def validationValuesOf(
       row: RawRow
@@ -130,13 +131,6 @@ class OrderedRowDescription(
 
   def check(rawRow: RawRow): Boolean = rowDivider.executeCheckOn(rawRow)
 
-  override def equals(obj: scala.Any): Boolean = obj match {
-    case rowDescription: OrderedRowDescription =>
-      rowDescription.rowDivider == this.rowDivider &&
-        rowDescription.label == this.label
-
-    case _ => false
-  }
 }
 
 object OrderedRowDescription {

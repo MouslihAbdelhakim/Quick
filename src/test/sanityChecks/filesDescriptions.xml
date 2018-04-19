@@ -1,0 +1,212 @@
+<FilesDescriptionsList>
+    <UnorderedFileDescription id="fixedlength" >
+        <FixedOrderedRowDescription label="records" >
+            <ColumnIdentifier
+                    matchAgainst="[0-9]+ *"
+                    label="monthly order id"
+                    startsAt="1"
+                    length="17"
+                    endsAt="17"
+                    useDuringValidation="true"
+                    useDuringMatching="true"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+            />
+            <ColumnDescription
+                    label="creation date"
+                    startsAt="18"
+                    length="14"
+                    endsAt="31"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="last delivery id"
+                    startsAt="32"
+                    length="17"
+                    endsAt="48"
+                    useDuringValidation="false"
+                    useDuringMatching="false"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+                    checkColumnValueMatches=" *[0-9]+ *"
+            />
+            <ColumnDescription
+                    label="last delivery date"
+                    startsAt="49"
+                    length="19"
+                    endsAt="67"
+                    useDuringValidation="false"
+                    useDuringMatching="false"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="taken from warehouse"
+                    startsAt="68"
+                    length="21"
+                    endsAt="88"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="false"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="salesman name"
+                    startsAt="89"
+                    length="16"
+                    endsAt="104"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="item"
+                    startsAt="105"
+                    length="8"
+                    endsAt="112"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="quantity"
+                    startsAt="113"
+                    length="9"
+                    endsAt="121"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="false"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="Price per item"
+                    startsAt="122"
+                    length="15"
+                    endsAt="136"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="false"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="total price"
+                    startsAt="137"
+                    length="11"
+                    endsAt="147"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="false"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+        </FixedOrderedRowDescription>
+    </UnorderedFileDescription>
+    <UnorderedFileDescription id="delimited" >
+        <DelimitedOrderedRowDescription label="records" literalDelimiter=";">
+            <ColumnIdentifier
+                    matchAgainst="[0-9]+"
+                    label="monthly order id"
+                    position="1"
+                    useDuringValidation="true"
+                    useDuringMatching="true"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+            />
+            <ColumnDescription
+                    label="creation date"
+                    position="2"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="last delivery id"
+                    position="3"
+                    useDuringValidation="false"
+                    useDuringMatching="false"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+                    checkColumnValueMatches="[0-9]+"
+            />
+            <ColumnDescription
+                    label="last delivery date"
+                    position="4"
+                    useDuringValidation="false"
+                    useDuringMatching="false"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="taken from warehouse"
+                    position="5"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="false"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="salesman name"
+                    position="6"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="item"
+                    position="7"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="true"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="quantity"
+                    position="8"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="false"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="Price per item"
+                    position="9"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="false"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+            <ColumnDescription
+                    label="total price"
+                    position="10"
+                    useDuringValidation="true"
+                    useDuringMatching="false"
+                    useDuringReporting="false"
+                    trimComparisonValue="true"
+                    ignoreComparisonValueCase="true"
+            />
+        </DelimitedOrderedRowDescription>
+    </UnorderedFileDescription>
+</FilesDescriptionsList>

@@ -3,7 +3,7 @@ package com.scalableQuality.quick.core.fileComponentDescriptions
 import com.scalableQuality.quick.core.Reporting.ComparisonBetweenTwoColumns
 import com.scalableQuality.quick.core.checks.{Check, CheckColumnValue}
 import com.scalableQuality.quick.core.fileComponentDescriptions.errorMessages.FixedColumnDescriptionErrorMessages
-import com.scalableQuality.quick.core.phases.{ColumnUsageStages, ShouldUseDuring}
+import com.scalableQuality.quick.core.phases.{ColumnUsageStages, ShouldUseDuring, ValidationStage}
 import com.scalableQuality.quick.core.valueMapping.ValueMapper
 import com.scalableQuality.quick.mantle.constructFromXml.{AttributeValueConversion, AttributeValueExtractor, AttributesValuesExtractor, XMLHelperFunctions}
 import com.scalableQuality.quick.mantle.error.{BunchOfErrors, UnrecoverableError}
@@ -38,6 +38,9 @@ class FixedColumnDescription(
     val value = columnValue(row)
     columnValueChecks(value)
   }
+
+  def usableDuringValidation: Boolean = shouldUseDuring(ValidationStage) || columnValueChecks.checksAreDefined
+
   private def checkColumnValue(maybeRow: Option[RawRow]): Boolean =
     maybeRow
       .map(checkColumnValue(_))
@@ -50,6 +53,7 @@ class FixedColumnDescription(
     val rightColumn = rightRow.flatMap(this.comparisonValue)
     leftColumn == rightColumn
   }
+
 }
 
 object FixedColumnDescription {

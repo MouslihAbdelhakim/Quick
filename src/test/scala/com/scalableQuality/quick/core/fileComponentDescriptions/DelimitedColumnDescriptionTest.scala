@@ -124,4 +124,68 @@ class DelimitedColumnDescriptionTest
       DelimitedColumnDescription(columnDescriptionElem.attributes)
     columnDescription shouldBe a[Left[_, _]]
   }
+
+  "DelimitedColumnDescription.usableDuringValidation" should "return true with all default values" in {
+    val columnDescriptionElem = <ColumnDescription
+      label="this is a column in russian accent"
+      position="1"
+      />
+    val columnDescriptionEither =
+      DelimitedColumnDescription(columnDescriptionElem.attributes)
+    columnDescriptionEither  match {
+      case Right(columnDescription) =>
+        columnDescription.usableDuringValidation shouldBe true
+      case _ => fail()
+    }
+  }
+
+  it should "return true when only validation is activated"  in {
+    val columnDescriptionElem = <ColumnDescription
+      label="this is a column in russian accent"
+      position="1"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+    val columnDescriptionEither =
+      DelimitedColumnDescription(columnDescriptionElem.attributes)
+    columnDescriptionEither  match {
+      case Right(columnDescription) =>
+        columnDescription.usableDuringValidation shouldBe true
+      case _ => fail()
+    }
+  }
+
+  it should "return false when validation and checkColumnValueExists are deactivated and checkColumnValueMatch is not mentioned"  in {
+    val columnDescriptionElem = <ColumnDescription
+      label="this is a column in russian accent"
+      position="1"
+      useDuringValidation="false"
+      checkColumnValueExists="false"
+      />
+    val columnDescriptionEither =
+      DelimitedColumnDescription(columnDescriptionElem.attributes)
+    columnDescriptionEither  match {
+      case Right(columnDescription) =>
+        columnDescription.usableDuringValidation shouldBe false
+      case _ => fail()
+    }
+  }
+
+  it should "return false when no validation and checks are deactivated even if matching and reporting are activated"  in {
+    val columnDescriptionElem = <ColumnDescription
+      label="this is a column in russian accent"
+      position="1"
+      useDuringValidation="false"
+      checkColumnValueExists="false"
+      useDuringMatching="true"
+      useDuringReporting="true"
+      />
+    val columnDescriptionEither =
+      DelimitedColumnDescription(columnDescriptionElem.attributes)
+    columnDescriptionEither  match {
+      case Right(columnDescription) =>
+        columnDescription.usableDuringValidation shouldBe false
+      case _ => fail()
+    }
+  }
 }

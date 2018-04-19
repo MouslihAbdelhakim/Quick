@@ -1,9 +1,6 @@
 package com.scalableQuality.quick.core.fileProcessingPhase
 
-import com.scalableQuality.quick.core.Reporting.{
-  FilledValidationAndMatchingReport,
-  ValidationAndMatchingReport
-}
+import com.scalableQuality.quick.core.Reporting.{EmptyValidationAndMatchingReport, FilledValidationAndMatchingReport, ValidationAndMatchingReport}
 import com.scalableQuality.quick.core.fileComponentDescriptions.OrderedRowDescription
 import com.scalableQuality.quick.mantle.parsing.RawRow
 class CheckAndValidateAndMatchRows(
@@ -13,7 +10,7 @@ class CheckAndValidateAndMatchRows(
     leftFileLabel: Option[String],
     rightFileLabel: Option[String]
 ) extends RowsProcessingPhase {
-  override def execute(): ValidationAndMatchingReport = {
+  override def execute(): ValidationAndMatchingReport = if (orderedRowDescription.isValidatable) {
     val (leftFileRowsPassedChecks, leftFileRowsFailedChecks) =
       CheckingProcess(orderedRowDescription, leftFileRows)
     val (rightFileRowsPassedChecks, rightFileRowsFailedChecks) =
@@ -35,6 +32,8 @@ class CheckAndValidateAndMatchRows(
       rightFileLabel,
       matchedRows
     )
+  } else {
+    EmptyValidationAndMatchingReport
   }
 }
 object CheckAndValidateAndMatchRows {

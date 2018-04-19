@@ -20,7 +20,9 @@ object ExitWithStatus {
       case _ =>
         ExitWithStatus(FilesAreDifferent)
     }
-  def interruptedByAnError: Unit = ExitWithStatus(InterruptedByAnError)
+
+  def interruptedByAnError(): Unit = ExitWithStatus(InterruptedByAnError)
+
   private def apply(exitStatus: ExitStatus): Unit =
     System.exit(exitStatus.value)
 }

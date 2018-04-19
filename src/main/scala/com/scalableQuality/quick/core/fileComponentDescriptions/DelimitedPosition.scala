@@ -6,7 +6,7 @@ import com.scalableQuality.quick.mantle.error.UnrecoverableError
 
 import scala.xml.MetaData
 
-class DelimitedPosition(
+case class DelimitedPosition(
     position: Int,
     override val toString: String
 ) {

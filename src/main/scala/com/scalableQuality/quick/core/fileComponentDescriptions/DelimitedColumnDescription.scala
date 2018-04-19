@@ -3,16 +3,10 @@ package com.scalableQuality.quick.core.fileComponentDescriptions
 import com.scalableQuality.quick.core.Reporting.ComparisonBetweenTwoColumns
 import com.scalableQuality.quick.core.checks.{Check, CheckColumnValue}
 import com.scalableQuality.quick.core.fileComponentDescriptions.errorMessages.DelimitedColumnDescriptionErrorMessages
-import com.scalableQuality.quick.core.phases.{
-  ColumnUsageStages,
-  ShouldUseDuring
-}
+import com.scalableQuality.quick.core.phases.{ColumnUsageStages, ShouldUseDuring, ValidationStage}
 import com.scalableQuality.quick.core.valueMapping.ValueMapper
 import com.scalableQuality.quick.mantle.constructFromXml._
-import com.scalableQuality.quick.mantle.error.{
-  BunchOfErrors,
-  UnrecoverableError
-}
+import com.scalableQuality.quick.mantle.error.{BunchOfErrors, UnrecoverableError}
 
 import scala.xml.MetaData
 
@@ -44,6 +38,8 @@ class DelimitedColumnDescription(
     val value = columnValue(row)
     columnValueChecks(value)
   }
+
+  def  usableDuringValidation: Boolean = shouldUseDuring(ValidationStage) || columnValueChecks.checksAreDefined
 
   private def checkColumnValue(maybeStrings: Option[Vector[String]]): Boolean =
     maybeStrings

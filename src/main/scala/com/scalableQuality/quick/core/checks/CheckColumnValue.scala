@@ -28,6 +28,8 @@ class CheckColumnValue(
             previousPreValidationResult && preValidationFunction(columnValue)
         }
     }
+
+  def checksAreDefined: Boolean = ! checks.isEmpty
 }
 
 object CheckColumnValue {
@@ -35,10 +37,6 @@ object CheckColumnValue {
   def apply(
       checks: List[Check]
   ): CheckColumnValue = new CheckColumnValue(checks)
-
-  def apply(
-      checks: Check*
-  ): CheckColumnValue = new CheckColumnValue(checks.toList)
 
   def apply(
       metaData: MetaData): Either[UnrecoverableError, CheckColumnValue] = {

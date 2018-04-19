@@ -1292,8 +1292,8 @@ class OrderedRowDescriptionTest
     }
   }
 
-  "OrderedRowDescription.check" should "always only checks column presence if no checks are present" in {
-    val rawRow = RawRow("FirstColumnSecondColumnThir", 1)
+  "OrderedRowDescription.check" should "check fixed length column value exists by default" in {
+    val rawRow = RawRow("FirstColumnSecond", 1)
     val firstColumnDescriptionElem = <ColumnDescription
       label="FirstColumn"
       startsAt="1"
@@ -1340,7 +1340,57 @@ class OrderedRowDescriptionTest
       case _ => fail
     }
   }
-  it should "return true if the first column exists" in {
+
+  it should "check delimited column value exists by default" in {
+    val rawRow = RawRow("FirstColumn;Second", 1)
+    val firstColumnDescriptionElem = <ColumnDescription
+      label="FirstColumn"
+      position="1"
+      useDuringValidation="true"
+      />
+    val secondColumnDescriptionElem = <ColumnDescription
+      label="SecondColumn"
+      position="2"
+      useDuringValidation="true"
+      />
+
+    val thirdColumnDescriptionElem = <ColumnDescription
+      label="ThirdColumn"
+      position="3"
+      useDuringValidation="true"
+      />
+
+    val firstColumnDescriptionEither =
+      DelimitedColumnDescription(firstColumnDescriptionElem.attributes)
+    val secondColumnDescriptionEither =
+      DelimitedColumnDescription(secondColumnDescriptionElem.attributes)
+    val thirdColumnDescriptionEither =
+      DelimitedColumnDescription(thirdColumnDescriptionElem.attributes)
+    val delimiterEither = LiteralDelimiter(";")
+
+    (firstColumnDescriptionEither,
+      secondColumnDescriptionEither,
+      thirdColumnDescriptionEither,
+      delimiterEither) match {
+      case (Right(firstColumnDescription),
+      Right(secondColumnDescription),
+      Right(thirdColumnDescription),
+        Right(delimiter)) =>
+        val columnDescriptionList = List(firstColumnDescription,
+          secondColumnDescription,
+          thirdColumnDescription)
+        val fixedRowDivider = DelimitedRowDivider(columnDescriptionList, delimiter)
+        val orderedRowDescription =
+          OrderedRowDescription(fixedRowDivider, "label")
+
+        val expectedCheckResult = false
+
+        orderedRowDescription.check(rawRow) shouldBe expectedCheckResult
+      case _ => fail
+    }
+  }
+
+  it should "return true if the first fixed length column exists" in {
     val rawRow = RawRow("FirstColumnSecondColumnThirdColumn", 1)
     val firstColumnDescriptionElem = <ColumnDescription
       label="FirstColumn"
@@ -1354,6 +1404,7 @@ class OrderedRowDescriptionTest
       startsAt="12"
       endsAt="23"
       useDuringValidation="true"
+      checkColumnValueExists="false"
       />
 
     val thirdColumnDescriptionElem = <ColumnDescription
@@ -1361,6 +1412,7 @@ class OrderedRowDescriptionTest
       startsAt="24"
       endsAt="34"
       useDuringValidation="true"
+      checkColumnValueExists="false"
       />
 
     val firstColumnDescriptionEither =
@@ -1390,7 +1442,59 @@ class OrderedRowDescriptionTest
     }
   }
 
-  it should "return true if the first and the last columns exist" in {
+  it should "return true if the first delimited column exists" in {
+    val rawRow = RawRow("FirstColumn;SecondColumn;ThirdColumn", 1)
+    val firstColumnDescriptionElem = <ColumnDescription
+      label="FirstColumn"
+      position="1"
+      useDuringValidation="true"
+      checkColumnValueExists="true"
+      />
+    val secondColumnDescriptionElem = <ColumnDescription
+      label="SecondColumn"
+      position="2"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+
+    val thirdColumnDescriptionElem = <ColumnDescription
+      label="ThirdColumn"
+      position="3"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+
+    val firstColumnDescriptionEither =
+      DelimitedColumnDescription(firstColumnDescriptionElem.attributes)
+    val secondColumnDescriptionEither =
+      DelimitedColumnDescription(secondColumnDescriptionElem.attributes)
+    val thirdColumnDescriptionEither =
+      DelimitedColumnDescription(thirdColumnDescriptionElem.attributes)
+    val delimiterEither = LiteralDelimiter(";")
+
+    (firstColumnDescriptionEither,
+      secondColumnDescriptionEither,
+      thirdColumnDescriptionEither,
+      delimiterEither) match {
+      case (Right(firstColumnDescription),
+      Right(secondColumnDescription),
+      Right(thirdColumnDescription),
+      Right(delimiter)) =>
+        val columnDescriptionList = List(firstColumnDescription,
+          secondColumnDescription,
+          thirdColumnDescription)
+        val fixedRowDivider = DelimitedRowDivider(columnDescriptionList, delimiter)
+        val orderedRowDescription =
+          OrderedRowDescription(fixedRowDivider, "label")
+
+        val expectedCheckResult = true
+
+        orderedRowDescription.check(rawRow) shouldBe expectedCheckResult
+      case _ => fail
+    }
+  }
+
+  it should "return true if the first fixed length and the last columns exist" in {
     val rawRow = RawRow("FirstColumnSecondColumnThirdColumn", 1)
     val firstColumnDescriptionElem = <ColumnDescription
       label="FirstColumn"
@@ -1441,7 +1545,59 @@ class OrderedRowDescriptionTest
     }
   }
 
-  it should "return false if the last column does not exist" in {
+  it should "return true if the first delimited and the last columns exist" in {
+    val rawRow = RawRow("FirstColumn;SecondColumn;ThirdColumn", 1)
+    val firstColumnDescriptionElem = <ColumnDescription
+      label="FirstColumn"
+      position="1"
+      useDuringValidation="true"
+      checkColumnValueExists="true"
+      />
+    val secondColumnDescriptionElem = <ColumnDescription
+      label="SecondColumn"
+      position="2"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+
+    val thirdColumnDescriptionElem = <ColumnDescription
+      label="ThirdColumn"
+      position="3"
+      useDuringValidation="true"
+      checkColumnValueExists="true"
+      />
+
+    val firstColumnDescriptionEither =
+      DelimitedColumnDescription(firstColumnDescriptionElem.attributes)
+    val secondColumnDescriptionEither =
+      DelimitedColumnDescription(secondColumnDescriptionElem.attributes)
+    val thirdColumnDescriptionEither =
+      DelimitedColumnDescription(thirdColumnDescriptionElem.attributes)
+    val delimiterEither = LiteralDelimiter(";")
+
+    (firstColumnDescriptionEither,
+      secondColumnDescriptionEither,
+      thirdColumnDescriptionEither,
+      delimiterEither) match {
+      case (Right(firstColumnDescription),
+      Right(secondColumnDescription),
+      Right(thirdColumnDescription),
+      Right(delimiter)) =>
+        val columnDescriptionList = List(firstColumnDescription,
+          secondColumnDescription,
+          thirdColumnDescription)
+        val fixedRowDivider = DelimitedRowDivider(columnDescriptionList, delimiter)
+        val orderedRowDescription =
+          OrderedRowDescription(fixedRowDivider, "label")
+
+        val expectedCheckResult = true
+
+        orderedRowDescription.check(rawRow) shouldBe expectedCheckResult
+      case _ => fail
+    }
+  }
+
+  it should "return false if the last fixed length column does not exist" in {
     val rawRow = RawRow("FirstColumnSecondColumn", 1)
     val firstColumnDescriptionElem = <ColumnDescription
       label="FirstColumn"
@@ -1491,7 +1647,59 @@ class OrderedRowDescriptionTest
     }
   }
 
-  it should "return false if the first column exists and last column does not exist" in {
+  it should "return false if the last delimited column does not exist" in {
+    val rawRow = RawRow("FirstColumn;SecondColumn", 1)
+    val firstColumnDescriptionElem = <ColumnDescription
+      label="FirstColumn"
+      position="1"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+    val secondColumnDescriptionElem = <ColumnDescription
+      label="SecondColumn"
+      position="2"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+
+    val thirdColumnDescriptionElem = <ColumnDescription
+      label="ThirdColumn"
+      position="3"
+      useDuringValidation="true"
+      checkColumnValueExists="true"
+      />
+
+    val firstColumnDescriptionEither =
+      DelimitedColumnDescription(firstColumnDescriptionElem.attributes)
+    val secondColumnDescriptionEither =
+      DelimitedColumnDescription(secondColumnDescriptionElem.attributes)
+    val thirdColumnDescriptionEither =
+      DelimitedColumnDescription(thirdColumnDescriptionElem.attributes)
+    val delimiterEither = LiteralDelimiter(";")
+
+    (firstColumnDescriptionEither,
+      secondColumnDescriptionEither,
+      thirdColumnDescriptionEither,
+      delimiterEither) match {
+      case (Right(firstColumnDescription),
+      Right(secondColumnDescription),
+      Right(thirdColumnDescription),
+      Right(delimiter)) =>
+        val columnDescriptionList = List(firstColumnDescription,
+          secondColumnDescription,
+          thirdColumnDescription)
+        val fixedRowDivider = DelimitedRowDivider(columnDescriptionList, delimiter)
+        val orderedRowDescription =
+          OrderedRowDescription(fixedRowDivider, "label")
+
+        val expectedCheckResult = false
+
+        orderedRowDescription.check(rawRow) shouldBe expectedCheckResult
+      case _ => fail
+    }
+  }
+
+  it should "return false if the first fixed length column exists and last column does not exist" in {
     val rawRow = RawRow("FirstColumnSecondColumn", 1)
     val firstColumnDescriptionElem = <ColumnDescription
       label="FirstColumn"
@@ -1504,7 +1712,8 @@ class OrderedRowDescriptionTest
       label="SecondColumn"
       startsAt="12"
       endsAt="23"
-      useDuringValidation="true"
+      useDuringValidation="false"
+      checkColumnValueExists="false"
       />
 
     val thirdColumnDescriptionElem = <ColumnDescription
@@ -1542,7 +1751,59 @@ class OrderedRowDescriptionTest
     }
   }
 
-  it should "return true if the first column matches the regex" in {
+  it should "return false if the first delimited column exists and last column does not exist" in {
+    val rawRow = RawRow("FirstColumn;SecondColumn", 1)
+    val firstColumnDescriptionElem = <ColumnDescription
+      label="FirstColumn"
+      position="1"
+      useDuringValidation="true"
+      checkColumnValueExists="true"
+      />
+    val secondColumnDescriptionElem = <ColumnDescription
+      label="SecondColumn"
+      position="2"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+
+    val thirdColumnDescriptionElem = <ColumnDescription
+      label="ThirdColumn"
+      position="3"
+      useDuringValidation="true"
+      checkColumnValueExists="true"
+      />
+
+    val firstColumnDescriptionEither =
+      DelimitedColumnDescription(firstColumnDescriptionElem.attributes)
+    val secondColumnDescriptionEither =
+      DelimitedColumnDescription(secondColumnDescriptionElem.attributes)
+    val thirdColumnDescriptionEither =
+      DelimitedColumnDescription(thirdColumnDescriptionElem.attributes)
+    val delimiterEither = LiteralDelimiter(";")
+
+    (firstColumnDescriptionEither,
+      secondColumnDescriptionEither,
+      thirdColumnDescriptionEither,
+      delimiterEither) match {
+      case (Right(firstColumnDescription),
+      Right(secondColumnDescription),
+      Right(thirdColumnDescription),
+      Right(delimiter)) =>
+        val columnDescriptionList = List(firstColumnDescription,
+          secondColumnDescription,
+          thirdColumnDescription)
+        val fixedRowDivider = DelimitedRowDivider(columnDescriptionList, delimiter)
+        val orderedRowDescription =
+          OrderedRowDescription(fixedRowDivider, "label")
+
+        val expectedCheckResult = false
+
+        orderedRowDescription.check(rawRow) shouldBe expectedCheckResult
+      case _ => fail
+    }
+  }
+
+  it should "return true if the first fixed length column matches the regex" in {
     val rawRow = RawRow("FirstColumnSecondColumnThirdColumn", 1)
     val firstColumnDescriptionElem = <ColumnDescription
       label="FirstColumn"
@@ -1550,12 +1811,14 @@ class OrderedRowDescriptionTest
       endsAt="11"
       useDuringValidation="true"
       checkColumnValueMatches="[a-zA-Z]+"
+      checkColumnValueExists="false"
       />
     val secondColumnDescriptionElem = <ColumnDescription
       label="SecondColumn"
       startsAt="12"
       endsAt="23"
       useDuringValidation="true"
+      checkColumnValueExists="false"
       />
 
     val thirdColumnDescriptionElem = <ColumnDescription
@@ -1563,6 +1826,7 @@ class OrderedRowDescriptionTest
       startsAt="24"
       endsAt="34"
       useDuringValidation="true"
+      checkColumnValueExists="false"
       />
 
     val firstColumnDescriptionEither =
@@ -1592,7 +1856,60 @@ class OrderedRowDescriptionTest
     }
   }
 
-  it should "return true if the first and the last match the supplied regexes" in {
+  it should "return true if the first delimited column matches the regex" in {
+    val rawRow = RawRow("FirstColumn;SecondColumn;ThirdColumn", 1)
+    val firstColumnDescriptionElem = <ColumnDescription
+      label="FirstColumn"
+      position="1"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      checkColumnValueMatches=".*"
+      />
+    val secondColumnDescriptionElem = <ColumnDescription
+      label="SecondColumn"
+      position="2"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+
+    val thirdColumnDescriptionElem = <ColumnDescription
+      label="ThirdColumn"
+      position="3"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+
+    val firstColumnDescriptionEither =
+      DelimitedColumnDescription(firstColumnDescriptionElem.attributes)
+    val secondColumnDescriptionEither =
+      DelimitedColumnDescription(secondColumnDescriptionElem.attributes)
+    val thirdColumnDescriptionEither =
+      DelimitedColumnDescription(thirdColumnDescriptionElem.attributes)
+    val delimiterEither = LiteralDelimiter(";")
+
+    (firstColumnDescriptionEither,
+      secondColumnDescriptionEither,
+      thirdColumnDescriptionEither,
+      delimiterEither) match {
+      case (Right(firstColumnDescription),
+      Right(secondColumnDescription),
+      Right(thirdColumnDescription),
+      Right(delimiter)) =>
+        val columnDescriptionList = List(firstColumnDescription,
+          secondColumnDescription,
+          thirdColumnDescription)
+        val fixedRowDivider = DelimitedRowDivider(columnDescriptionList, delimiter)
+        val orderedRowDescription =
+          OrderedRowDescription(fixedRowDivider, "label")
+
+        val expectedCheckResult = true
+
+        orderedRowDescription.check(rawRow) shouldBe expectedCheckResult
+      case _ => fail
+    }
+  }
+
+  it should "return true if the first fixed length and the last match the supplied regexes" in {
     val rawRow = RawRow("FirstColumnSecondColumnThirdColumn", 1)
     val firstColumnDescriptionElem = <ColumnDescription
       label="FirstColumn"
@@ -1600,12 +1917,14 @@ class OrderedRowDescriptionTest
       endsAt="11"
       useDuringValidation="true"
       checkColumnValueMatches="[a-zA-Z]+"
+      checkColumnValueExists="false"
       />
     val secondColumnDescriptionElem = <ColumnDescription
       label="SecondColumn"
       startsAt="12"
       endsAt="23"
       useDuringValidation="true"
+      checkColumnValueExists="false"
       />
 
     val thirdColumnDescriptionElem = <ColumnDescription
@@ -1614,6 +1933,7 @@ class OrderedRowDescriptionTest
       endsAt="34"
       useDuringValidation="true"
       checkColumnValueMatches="[a-zA-Z]+"
+      checkColumnValueExists="false"
       />
 
     val firstColumnDescriptionEither =
@@ -1643,19 +1963,75 @@ class OrderedRowDescriptionTest
     }
   }
 
-  it should "return false if the last column matches the regex" in {
-    val rawRow = RawRow("FirstColumnSecondColumn", 1)
+  it should "return true if the first delimited column and the last match the supplied regexes" in {
+    val rawRow = RawRow("FirstColumn;SecondColumn;ThirdColumn", 1)
+    val firstColumnDescriptionElem = <ColumnDescription
+      label="FirstColumn"
+      position="1"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      checkColumnValueMatches=".*"
+      />
+    val secondColumnDescriptionElem = <ColumnDescription
+      label="SecondColumn"
+      position="2"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+
+    val thirdColumnDescriptionElem = <ColumnDescription
+      label="ThirdColumn"
+      position="3"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      checkColumnValueMatches=".*"
+      />
+
+    val firstColumnDescriptionEither =
+      DelimitedColumnDescription(firstColumnDescriptionElem.attributes)
+    val secondColumnDescriptionEither =
+      DelimitedColumnDescription(secondColumnDescriptionElem.attributes)
+    val thirdColumnDescriptionEither =
+      DelimitedColumnDescription(thirdColumnDescriptionElem.attributes)
+    val delimiterEither = LiteralDelimiter(";")
+
+    (firstColumnDescriptionEither,
+      secondColumnDescriptionEither,
+      thirdColumnDescriptionEither,
+      delimiterEither) match {
+      case (Right(firstColumnDescription),
+      Right(secondColumnDescription),
+      Right(thirdColumnDescription),
+      Right(delimiter)) =>
+        val columnDescriptionList = List(firstColumnDescription,
+          secondColumnDescription,
+          thirdColumnDescription)
+        val fixedRowDivider = DelimitedRowDivider(columnDescriptionList, delimiter)
+        val orderedRowDescription =
+          OrderedRowDescription(fixedRowDivider, "label")
+
+        val expectedCheckResult = true
+
+        orderedRowDescription.check(rawRow) shouldBe expectedCheckResult
+      case _ => fail
+    }
+  }
+
+  it should "return false if the last fixed length column does not matche the regex" in {
+    val rawRow = RawRow("FirstColumnSecondColumnThirdColumn", 1)
     val firstColumnDescriptionElem = <ColumnDescription
       label="FirstColumn"
       startsAt="1"
       endsAt="11"
       useDuringValidation="true"
+      checkColumnValueExists="false"
       />
     val secondColumnDescriptionElem = <ColumnDescription
       label="SecondColumn"
       startsAt="12"
       endsAt="23"
       useDuringValidation="true"
+      checkColumnValueExists="false"
       />
 
     val thirdColumnDescriptionElem = <ColumnDescription
@@ -1663,7 +2039,8 @@ class OrderedRowDescriptionTest
       startsAt="24"
       endsAt="34"
       useDuringValidation="true"
-      checkColumnValueMatches="[a-zA-Z]+"
+      checkColumnValueMatches="[0-9]+"
+      checkColumnValueExists="false"
       />
 
     val firstColumnDescriptionEither =
@@ -1693,7 +2070,60 @@ class OrderedRowDescriptionTest
     }
   }
 
-  it should "return false if the first column exists and last columns do not match the regexes" in {
+  it should "return false if the last delimited column does not matche the regex" in {
+    val rawRow = RawRow("FirstColumn;SecondColumn;ThirdColumn", 1)
+    val firstColumnDescriptionElem = <ColumnDescription
+      label="FirstColumn"
+      position="1"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+    val secondColumnDescriptionElem = <ColumnDescription
+      label="SecondColumn"
+      position="2"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+
+    val thirdColumnDescriptionElem = <ColumnDescription
+      label="ThirdColumn"
+      position="3"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      checkColumnValueMatches="[0-9]+"
+      />
+
+    val firstColumnDescriptionEither =
+      DelimitedColumnDescription(firstColumnDescriptionElem.attributes)
+    val secondColumnDescriptionEither =
+      DelimitedColumnDescription(secondColumnDescriptionElem.attributes)
+    val thirdColumnDescriptionEither =
+      DelimitedColumnDescription(thirdColumnDescriptionElem.attributes)
+    val delimiterEither = LiteralDelimiter(";")
+
+    (firstColumnDescriptionEither,
+      secondColumnDescriptionEither,
+      thirdColumnDescriptionEither,
+      delimiterEither) match {
+      case (Right(firstColumnDescription),
+      Right(secondColumnDescription),
+      Right(thirdColumnDescription),
+      Right(delimiter)) =>
+        val columnDescriptionList = List(firstColumnDescription,
+          secondColumnDescription,
+          thirdColumnDescription)
+        val fixedRowDivider = DelimitedRowDivider(columnDescriptionList, delimiter)
+        val orderedRowDescription =
+          OrderedRowDescription(fixedRowDivider, "label")
+
+        val expectedCheckResult = false
+
+        orderedRowDescription.check(rawRow) shouldBe expectedCheckResult
+      case _ => fail
+    }
+  }
+
+  it should "return false if the first fixed length column exists and last columns do not match the regexes" in {
     val rawRow = RawRow("FirstColumnSecondColumn", 1)
     val firstColumnDescriptionElem = <ColumnDescription
       label="FirstColumn"
@@ -1701,12 +2131,14 @@ class OrderedRowDescriptionTest
       endsAt="11"
       useDuringValidation="true"
       checkColumnValueMatches="[0-9]+"
+      checkColumnValueExists="false"
       />
     val secondColumnDescriptionElem = <ColumnDescription
       label="SecondColumn"
       startsAt="12"
       endsAt="23"
       useDuringValidation="true"
+      checkColumnValueExists="false"
       />
 
     val thirdColumnDescriptionElem = <ColumnDescription
@@ -1715,6 +2147,7 @@ class OrderedRowDescriptionTest
       endsAt="34"
       useDuringValidation="true"
       checkColumnValueMatches="[0-9]+"
+      checkColumnValueExists="false"
       />
 
     val firstColumnDescriptionEither =
@@ -1734,6 +2167,59 @@ class OrderedRowDescriptionTest
                                          secondColumnDescription,
                                          thirdColumnDescription)
         val fixedRowDivider = FixedRowDivider(columnDescriptionList)
+        val orderedRowDescription =
+          OrderedRowDescription(fixedRowDivider, "label")
+
+        val expectedCheckResult = false
+
+        orderedRowDescription.check(rawRow) shouldBe expectedCheckResult
+      case _ => fail
+    }
+  }
+
+  it should "return false if the first delimited column exists and last columns do not match the regexes" in {
+    val rawRow = RawRow("FirstColumn;SecondColumn;ThirdColumn", 1)
+    val firstColumnDescriptionElem = <ColumnDescription
+      label="FirstColumn"
+      position="1"
+      useDuringValidation="true"
+      checkColumnValueExists="true"
+      />
+    val secondColumnDescriptionElem = <ColumnDescription
+      label="SecondColumn"
+      position="2"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      />
+
+    val thirdColumnDescriptionElem = <ColumnDescription
+      label="ThirdColumn"
+      position="3"
+      useDuringValidation="true"
+      checkColumnValueExists="false"
+      checkColumnValueMatches="[0-9]+"
+      />
+
+    val firstColumnDescriptionEither =
+      DelimitedColumnDescription(firstColumnDescriptionElem.attributes)
+    val secondColumnDescriptionEither =
+      DelimitedColumnDescription(secondColumnDescriptionElem.attributes)
+    val thirdColumnDescriptionEither =
+      DelimitedColumnDescription(thirdColumnDescriptionElem.attributes)
+    val delimiterEither = LiteralDelimiter(";")
+
+    (firstColumnDescriptionEither,
+      secondColumnDescriptionEither,
+      thirdColumnDescriptionEither,
+      delimiterEither) match {
+      case (Right(firstColumnDescription),
+      Right(secondColumnDescription),
+      Right(thirdColumnDescription),
+      Right(delimiter)) =>
+        val columnDescriptionList = List(firstColumnDescription,
+          secondColumnDescription,
+          thirdColumnDescription)
+        val fixedRowDivider = DelimitedRowDivider(columnDescriptionList, delimiter)
         val orderedRowDescription =
           OrderedRowDescription(fixedRowDivider, "label")
 

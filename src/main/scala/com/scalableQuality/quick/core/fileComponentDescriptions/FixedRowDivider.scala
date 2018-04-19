@@ -54,6 +54,12 @@ class FixedRowDivider(
     getCheckResult(allChecksResults)
   }
 
+  override def usableDuringValidation: Boolean = if(columnsDescriptions.isEmpty){
+    false
+  } else {
+    columnsDescriptions.map(_.usableDuringValidation).reduceLeft(_ || _)
+  }
+
   override def equals(obj: scala.Any): Boolean = obj match {
     case rowDivider: FixedRowDivider =>
       rowDivider.columnsDescriptions == this.columnsDescriptions

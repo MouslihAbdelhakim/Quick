@@ -28,13 +28,13 @@ class GroupRowsByRowDescription(
     quickState: QuickState
 ) {
   def validateAndMatchTheseTwoFiles(
-      leftFileRows: => List[RawRow],
-      rightFileRows: => List[RawRow]
+      leftFileRows: Stream[RawRow],
+      rightFileRows: Stream[RawRow]
   ): Either[UnrecoverableError, ValidateAndMatchTwoFiles] = {
 
     val groupLeftFileRowsByRowDescriptionEither =
       groupRowsByRowDescription(
-        leftFileRows,
+        leftFileRows.toList,
         listOfRowIdentifier,
         quickState.ignoreUnknownRows,
         GroupRowsByRowDescriptionErrorMessages
@@ -45,7 +45,7 @@ class GroupRowsByRowDescription(
       )
     val groupRightFileRowsByRowDescriptionEither =
       groupRowsByRowDescription(
-        rightFileRows,
+        rightFileRows.toList,
         listOfRowIdentifier,
         quickState.ignoreUnknownRows,
         GroupRowsByRowDescriptionErrorMessages

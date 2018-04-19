@@ -113,6 +113,12 @@ class FixedPositionTest
     fixedLengthPositionTest shouldBe a[Left[_, _]]
   }
 
+  it should "return Left[ErrorMessage,FixedPosition] when both endsAt and length are missing" in {
+    val fixedLengthPositionTest =
+      FixedPosition(1,None, None)
+    fixedLengthPositionTest shouldBe a[Left[_, _]]
+  }
+
   "FixedPosition.extractColumnValue" should "return Some(subString) where the first char is at (startsAt - 1) and the last at (endsAt - 1)" in {
     val fixedLengthPositionTestEither = FixedPosition(
       7,
@@ -161,7 +167,7 @@ class FixedPositionTest
     }
   }
 
-  it should "return None if the string ends before (startsAt-1)" in {
+  it should "return None if the string length < startsAt" in {
     val fixedLengthPositionTestEither = FixedPosition(
       13,
       Some(13),
@@ -177,14 +183,14 @@ class FixedPositionTest
     }
   }
 
-  it should "return None if the string ends before (endsAt - 1)" in {
+  it should "return None if the string length < endsAt - 1" in {
     val fixedLengthPositionTestEither = FixedPosition(
-      1,
+      3,
       Some(13),
       None
     )
     val row = RawRow("PraiseTheSun", 1)
-    val expectedColumnValue = None
+    val expectedColumnValue = Some("aiseTheSun")
     fixedLengthPositionTestEither match {
       case Left(_) =>
         fail
@@ -193,14 +199,14 @@ class FixedPositionTest
     }
   }
 
-  it should "return None if the string's length is less than length" in {
+  it should "return subString from startAt to the end of string if the string's length is less than column's length" in {
     val fixedLengthPositionTestEither = FixedPosition(
-      1,
+      3,
       None,
       Some(13)
     )
     val row = RawRow("PraiseTheSun", 1)
-    val expectedColumnValue = None
+    val expectedColumnValue = Some("aiseTheSun")
     fixedLengthPositionTestEither match {
       case Left(_) =>
         fail

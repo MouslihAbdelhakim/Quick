@@ -6,9 +6,8 @@ import com.scalableQuality.quick.core.phases.{ColumnUsageStages, MatchingStage}
 import com.scalableQuality.quick.mantle.parsing.{LiteralDelimiter, RawRow}
 
 class DelimitedRowDivider(
-    private[DelimitedRowDivider] val columnsDescriptions: List[
-      DelimitedColumnDescription],
-    delimiter: LiteralDelimiter
+    private val columnsDescriptions: List[DelimitedColumnDescription],
+    private val delimiter: LiteralDelimiter
 ) extends RowDivider {
   override def keepOnlyColumnsDescriptionsUsedIn(
       columnUsages: ColumnUsageStages*
@@ -63,9 +62,16 @@ class DelimitedRowDivider(
     getCheckResult(allChecksResults)
   }
 
+  override def usableDuringValidation: Boolean = if(columnsDescriptions.isEmpty){
+    false
+  } else {
+    columnsDescriptions.map(_.usableDuringValidation).reduceLeft(_ || _)
+  }
+
   override def equals(obj: scala.Any): Boolean = obj match {
     case rowDivider: DelimitedRowDivider =>
-      rowDivider.columnsDescriptions == this.columnsDescriptions
+      rowDivider.columnsDescriptions == this.columnsDescriptions &&
+      rowDivider.delimiter == this.delimiter
     case _ => false
   }
 }

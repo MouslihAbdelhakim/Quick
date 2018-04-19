@@ -2,7 +2,7 @@ package com.scalableQuality.quick.surface.commandLineOptions
 
 object CommandLineParser {
   private val quickName = "Quick"
-  private val quickVersion = "\n\rrelease: 0.6\ncommit: 9aa62c8f91d6c945bcc6d174847b8f84f58f33d4"
+  private val quickVersion = "\n\rrelease: 0.6.2"
 
   def apply(args: Array[String]): Option[QuickState] =
     new scopt.OptionParser[QuickState](quickName) {

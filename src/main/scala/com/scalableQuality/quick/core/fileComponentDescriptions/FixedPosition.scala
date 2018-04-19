@@ -17,7 +17,10 @@ class FixedPosition(
 ) {
   def extractColumnValue(row: RawRow): Option[String] =
     try {
-      Some(row.value.substring(startsAt.toInt, endsAt))
+      if(startsAt < row.value.length && endsAt > row.value.length)
+        Some(row.value.substring(startsAt))
+      else
+        Some(row.value.substring(startsAt.toInt, endsAt))
     } catch {
       case e: Exception => None
     }

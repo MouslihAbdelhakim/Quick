@@ -20,4 +20,6 @@ trait RowDivider {
                                  rawRow: RawRow): List[Option[String]]
 
   def executeCheckOn(row: RawRow): Boolean
+
+  def usableDuringValidation: Boolean
 }

@@ -135,4 +135,43 @@ class CheckColumnValueTest
     }
   }
 
+  "CheckColumnValue.checksAreDefined" should "return true when at least one check is defined" in {
+    val columnDescription =
+        <ColumnDescription checkColumnValueMatches="[0-9]+" checkColumnValueExists="false" />
+    val columnValueCheckEither =
+      CheckColumnValue(columnDescription.attributes)
+    columnValueCheckEither match {
+      case Right(checkColumnValue) =>
+        checkColumnValue.checksAreDefined shouldBe true
+      case Left(_) =>
+        fail()
+    }
+  }
+
+  it should "return true when at more than one check is defined" in {
+    val columnDescription =
+        <ColumnDescription checkColumnValueMatches="[0-9]+" />
+    val columnValueCheckEither =
+      CheckColumnValue(columnDescription.attributes)
+    columnValueCheckEither match {
+      case Right(checkColumnValue) =>
+        checkColumnValue.checksAreDefined shouldBe true
+      case Left(_) =>
+        fail()
+    }
+  }
+
+  it should "return false when no check is defined" in {
+    val columnDescription =
+        <ColumnDescription checkColumnValueExists="false"/>
+    val columnValueCheckEither =
+      CheckColumnValue(columnDescription.attributes)
+    columnValueCheckEither match {
+      case Right(checkColumnValue) =>
+        checkColumnValue.checksAreDefined shouldBe false
+      case Left(_) =>
+        fail()
+    }
+  }
+
 }

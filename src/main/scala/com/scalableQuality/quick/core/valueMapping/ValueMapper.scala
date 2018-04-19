@@ -24,10 +24,6 @@ object ValueMapper {
     new ValueMapper(listOfTransformation)
   }
 
-  def apply(listOfTransformation: ValueMapperFunction*): ValueMapper = {
-    new ValueMapper(listOfTransformation.toList)
-  }
-
   // TODO : improve attribute extraction
   def apply(elemMetaData: MetaData): Either[UnrecoverableError, ValueMapper] = {
 

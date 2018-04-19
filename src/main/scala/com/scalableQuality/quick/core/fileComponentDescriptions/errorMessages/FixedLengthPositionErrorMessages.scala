@@ -23,7 +23,7 @@ object FixedLengthPositionErrorMessages {
     val errorMessage = EncounteredError(
       actionDescription,
       "the provided startsAt position is less than 1",
-      "provide a startsAt value in the range of [1,${Int.MaxValue}]"
+      s"provide a startsAt value in the range of [1,${Int.MaxValue}]"
     )
     Left(errorMessage)
   }
@@ -50,7 +50,7 @@ object FixedLengthPositionErrorMessages {
     val errorMessage = EncounteredError(
       actionDescription,
       "endsAt is less than startsAt",
-      "please provide an endsAt in the range of [startsAt,${Int.MaxInt}] "
+      s"please provide an endsAt in the range of [startsAt,${Int.MaxValue}] "
     )
     Left(errorMessage)
   }
@@ -59,7 +59,7 @@ object FixedLengthPositionErrorMessages {
     val errorMessage = EncounteredError(
       actionDescription,
       "the length is less than 1",
-      "please provide a length in the range of [1,${Int.MaxInt}]"
+      s"please provide a length in the range of [1,${Int.MaxValue}]"
     )
     Left(errorMessage)
   }

@@ -1,0 +1,272 @@
+runTestDifferentDelimitedFiles
+comparison of two rows using the row description: records
+from file ordersTableDump-01-12-2017.csv the row at line 11 is used
+from file ordersTableDump-01-01-2018.csv the row at line 31 is used
++-----------------+------------+--------------------------------+--------------------------------+
+| Label           | Position   | ordersTableDump-01-12-2017.csv | ordersTableDump-01-01-2018.csv |
++-----------------+------------+--------------------------------+--------------------------------+
+|                 |            |                                |                                |
+! monthly order i |    1       | 64486674                       | 64486674                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! creation date   |    2       | 13/11/2008                     | 13/11/2008                     |
+|                 |            |                                |                                |
+! last delivery i |    3       | 31099214                       | 7140476                        |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! last delivery d |    4       | 14/11/2017                     | 14/12/2017                     |
+! ate             |            |                                |                                |
+|                 |            |                                |                                |
+! salesman name   |    6       | Jones                          | Jones                          |
+|                 |            |                                |                                |
+! item            |    7       | Binder                         | Binder                         |
+|                 |            |                                |                                |
+# quantity        |    8       | 60                             | 50                             |
+|                 |            |                                |                                |
+# total price     |   10       | 539,4                          | 449,5                          |
++-----------------+------------+--------------------------------+--------------------------------+
+
+
+
+comparison of two rows using the row description: records
+from file ordersTableDump-01-12-2017.csv the row at line 2 is used
+from file ordersTableDump-01-01-2018.csv the row at line 42 is used
++-----------------+------------+--------------------------------+--------------------------------+
+| Label           | Position   | ordersTableDump-01-12-2017.csv | ordersTableDump-01-01-2018.csv |
++-----------------+------------+--------------------------------+--------------------------------+
+|                 |            |                                |                                |
+! monthly order i |    1       | 91884579                       | 91884579                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! creation date   |    2       | 15/01/2004                     | 15/01/2004                     |
+|                 |            |                                |                                |
+! last delivery i |    3       | 25283692                       | 74358561                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! last delivery d |    4       | 01/11/2017                     | 01/12/2017                     |
+! ate             |            |                                |                                |
+|                 |            |                                |                                |
+# salesman name   |    6       | Jones                          | Hakim                          |
+|                 |            |                                |                                |
+! item            |    7       | Pencil                         | Pencil                         |
+|                 |            |                                |                                |
+# quantity        |    8       | 95                             | 100                            |
+|                 |            |                                |                                |
+# total price     |   10       | 189,05                         | 199,00                         |
++-----------------+------------+--------------------------------+--------------------------------+
+
+
+
+runTestIdenticalDelimitedFiles
+runTestDelimitedFilesWithChecks
+comparison of two rows using the row description: records
+from file ordersTableDump-01-12-2017.csv the row at line 28 is used
+from file ordersTableDump-01-01-2018.csv the row at line 24 is used
++-----------------+------------+--------------------------------+--------------------------------+
+| Label           | Position   | ordersTableDump-01-12-2017.csv | ordersTableDump-01-01-2018.csv |
++-----------------+------------+--------------------------------+--------------------------------+
+|                 |            |                                |                                |
+! monthly order i |    1       | 46885822                       | 46885822                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! creation date   |    2       | 04/11/2004                     | 04/11/2004                     |
+|                 |            |                                |                                |
+~ last delivery i |    3       | 51229012                       ~ oialehiel                      |
+~ d               |            |                                ~                                |
+|                 |            |                                |                                |
+! last delivery d |    4       | 14/11/2017                     | 15/12/2017                     |
+! ate             |            |                                |                                |
+|                 |            |                                |                                |
+! salesman name   |    6       | Jardine                        | Jardine                        |
+|                 |            |                                |                                |
+! item            |    7       | Pen Set                        | Pen Set                        |
++-----------------+------------+--------------------------------+--------------------------------+
+
+
+
+comparison of two rows using the row description: records
+from file ordersTableDump-01-12-2017.csv the row at line 31 is used
+from file ordersTableDump-01-01-2018.csv the row at line 32 is used
++-----------------+------------+--------------------------------+--------------------------------+
+| Label           | Position   | ordersTableDump-01-12-2017.csv | ordersTableDump-01-01-2018.csv |
++-----------------+------------+--------------------------------+--------------------------------+
+|                 |            |                                |                                |
+! monthly order i |    1       | 65634696                       | 65634696                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! creation date   |    2       | 01/08/2006                     | 01/08/2006                     |
+|                 |            |                                |                                |
+~ last delivery i |    3       ~ ijzioap                        ~ lslksklkks                     |
+~ d               |            ~                                ~                                |
+|                 |            |                                |                                |
+! last delivery d |    4       | 17/11/2017                     | 20/12/2017                     |
+! ate             |            |                                |                                |
+|                 |            |                                |                                |
+! salesman name   |    6       | Gill                           | Gill                           |
+|                 |            |                                |                                |
+! item            |    7       | Pencil                         | Pencil                         |
++-----------------+------------+--------------------------------+--------------------------------+
+
+
+
+comparison of two rows using the row description: records
+from file ordersTableDump-01-12-2017.csv the row at line 37 is used
+from file ordersTableDump-01-01-2018.csv the row at line 6 is used
++-----------------+------------+--------------------------------+--------------------------------+
+| Label           | Position   | ordersTableDump-01-12-2017.csv | ordersTableDump-01-01-2018.csv |
++-----------------+------------+--------------------------------+--------------------------------+
+|                 |            |                                |                                |
+! monthly order i |    1       | 13222920                       | 13222920                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! creation date   |    2       | 22/01/2009                     | 22/01/2009                     |
+|                 |            |                                |                                |
+~ last delivery i |    3       ~ ojeojo                         | 14457257                       |
+~ d               |            ~                                |                                |
+|                 |            |                                |                                |
+! last delivery d |    4       | 13/11/2017                     | 13/12/2017                     |
+! ate             |            |                                |                                |
+|                 |            |                                |                                |
+! salesman name   |    6       | Sorvino                        | Sorvino                        |
+|                 |            |                                |                                |
+! item            |    7       | Desk                           | Desk                           |
++-----------------+------------+--------------------------------+--------------------------------+
+
+
+
+runTestDifferentFixedLengthFiles
+comparison of two rows using the row description: records
+from file ordersTableDump-01-12-2017.csv the row at line 11 is used
+from file ordersTableDump-01-01-2018.csv the row at line 31 is used
++-----------------+------------+--------------------------------+--------------------------------+
+| Label           | Position   | ordersTableDump-01-12-2017.csv | ordersTableDump-01-01-2018.csv |
++-----------------+------------+--------------------------------+--------------------------------+
+|                 |            |                                |                                |
+! monthly order i |    1-17    | 64486674                       | 64486674                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! creation date   |   18-31    | 13/11/2008                     | 13/11/2008                     |
+|                 |            |                                |                                |
+! last delivery i |   32-48    | 31099214                       | 7140476                        |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! last delivery d |   49-67    | 14/11/2017                     | 14/12/2017                     |
+! ate             |            |                                |                                |
+|                 |            |                                |                                |
+! salesman name   |   89-104   | Jones                          | Jones                          |
+|                 |            |                                |                                |
+! item            |  105-112   | Binder                         | Binder                         |
+|                 |            |                                |                                |
+# quantity        |  113-121   | 60                             | 50                             |
+|                 |            |                                |                                |
+# total price     |  137-147   | 539,4                          | 449,5                          |
++-----------------+------------+--------------------------------+--------------------------------+
+
+
+
+comparison of two rows using the row description: records
+from file ordersTableDump-01-12-2017.csv the row at line 2 is used
+from file ordersTableDump-01-01-2018.csv the row at line 42 is used
++-----------------+------------+--------------------------------+--------------------------------+
+| Label           | Position   | ordersTableDump-01-12-2017.csv | ordersTableDump-01-01-2018.csv |
++-----------------+------------+--------------------------------+--------------------------------+
+|                 |            |                                |                                |
+! monthly order i |    1-17    | 91884579                       | 91884579                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! creation date   |   18-31    | 15/01/2004                     | 15/01/2004                     |
+|                 |            |                                |                                |
+! last delivery i |   32-48    | 25283692                       | 74358561                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! last delivery d |   49-67    | 01/11/2017                     | 01/12/2017                     |
+! ate             |            |                                |                                |
+|                 |            |                                |                                |
+# salesman name   |   89-104   | Jones                          | Hakim                          |
+|                 |            |                                |                                |
+! item            |  105-112   | Pencil                         | Pencil                         |
+|                 |            |                                |                                |
+# quantity        |  113-121   | 95                             | 100                            |
+|                 |            |                                |                                |
+# total price     |  137-147   | 189,05                         | 199,00                         |
++-----------------+------------+--------------------------------+--------------------------------+
+
+
+
+runTestIdenticalFixedLengthFiles
+runTestFixedLengthFileWithChecks
+comparison of two rows using the row description: records
+from file ordersTableDump-01-12-2017.csv the row at line 43 is used
+from file ordersTableDump-01-01-2018.csv the row at line 16 is used
++-----------------+------------+--------------------------------+--------------------------------+
+| Label           | Position   | ordersTableDump-01-12-2017.csv | ordersTableDump-01-01-2018.csv |
++-----------------+------------+--------------------------------+--------------------------------+
+|                 |            |                                |                                |
+! monthly order i |    1-17    | 30992423                       | 30992423                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! creation date   |   18-31    | 02/03/2011                     | 02/03/2011                     |
+|                 |            |                                |                                |
+~ last delivery i |   32-48    ~ iejksjiÃ¢                      ~ ozkzpapo                       |
+~ d               |            ~                                ~                                |
+|                 |            |                                |                                |
+! last delivery d |   49-67    |  21/11/2017                    | 21/12/2017                     |
+! ate             |            |                                |                                |
+|                 |            |                                |                                |
+! salesman name   |   89-104   |  Jardine                       | Jardine                        |
+|                 |            |                                |                                |
+! item            |  105-112   |  Binder                        | Binder                         |
++-----------------+------------+--------------------------------+--------------------------------+
+
+
+
+comparison of two rows using the row description: records
+from file ordersTableDump-01-12-2017.csv the row at line 22 is used
+from file ordersTableDump-01-01-2018.csv the row at line 12 is used
++-----------------+------------+--------------------------------+--------------------------------+
+| Label           | Position   | ordersTableDump-01-12-2017.csv | ordersTableDump-01-01-2018.csv |
++-----------------+------------+--------------------------------+--------------------------------+
+|                 |            |                                |                                |
+! monthly order i |    1-17    | 26186284                       | 26186284                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! creation date   |   18-31    | 16/01/2014                     | 16/01/2014                     |
+|                 |            |                                |                                |
+~ last delivery i |   32-48    | 67770032                       ~ okej,krj                       |
+~ d               |            |                                ~                                |
+|                 |            |                                |                                |
+! last delivery d |   49-67    | 29/11/2017                     | 29/12/2017                     |
+! ate             |            |                                |                                |
+|                 |            |                                |                                |
+! salesman name   |   89-104   | Smith                          | Smith                          |
+|                 |            |                                |                                |
+! item            |  105-112   | Pencil                         | Pencil                         |
++-----------------+------------+--------------------------------+--------------------------------+
+
+
+
+comparison of two rows using the row description: records
+from file ordersTableDump-01-12-2017.csv the row at line 15 is used
+from file ordersTableDump-01-01-2018.csv the row at line 27 is used
++-----------------+------------+--------------------------------+--------------------------------+
+| Label           | Position   | ordersTableDump-01-12-2017.csv | ordersTableDump-01-01-2018.csv |
++-----------------+------------+--------------------------------+--------------------------------+
+|                 |            |                                |                                |
+! monthly order i |    1-17    | 52157503                       | 52157503                       |
+! d               |            |                                |                                |
+|                 |            |                                |                                |
+! creation date   |   18-31    | 22/06/2011                     | 22/06/2011                     |
+|                 |            |                                |                                |
+~ last delivery i |   32-48    ~ iejznzkl                       | 12602834                       |
+~ d               |            ~                                |                                |
+|                 |            |                                |                                |
+! last delivery d |   49-67    | 20/11/2017                     | 20/12/2017                     |
+! ate             |            |                                |                                |
+|                 |            |                                |                                |
+! salesman name   |   89-104   | Jones                          | Jones                          |
+|                 |            |                                |                                |
+! item            |  105-112   | Pencil                         | Pencil                         |
++-----------------+------------+--------------------------------+--------------------------------+
+
+
+
